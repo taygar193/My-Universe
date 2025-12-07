@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color--principal: #8F76B3;
+    --color--secundario: #524366;
+    --color--fondo: #d9c5f6;
+    --color--detalle: #31283D;
+}
+
+html {
+    font-size: 16px;
+    font-family: "Nunito";
+    scroll-behavior: smooth;
+    text-align: center;
+}
+
+body {
+    background-color: var(--color--fondo);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color--secundario);
+    margin: 1rem 0;
+
+    h1 {
+        margin-left: 1rem;
+        font-family: "Baloo Bhaijaan 2", sans-serif;
+    }
+}
+
+nav {
+    padding: 2rem;
+    background-color: var(--color--secundario);
+
+    ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-evenly;
+
+        a {
+            text-decoration: none;
+            color: white;
+            font-family: "Baloo Bhaijaan 2", sans-serif;
+            font-size: 18px;
+        }
+
+        a:hover {
+            color: var(--color--detalle);
+        }
+    }
+}
+
+main {
+    background-image: url("../Assets/Concierto.jpg");
+    height: 20rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-attachment: fixed;
+    background-position: center;
+
+    h2 {
+        position: relative;
+        top: 45%;
+        color: white;
+        font-size: 40px;
+        text-shadow: 5px 5px 5px var(--color--detalle);
+    }
+}
+
+.tienda {
+    margin: 1rem auto;
+
+    h3 {
+        margin: 1rem;
+        font-family: "Baloo Bhaijaan 2", sans-serif;
+        font-size: 30px;
+        font-weight: 700;
+        color: var(--color--detalle);
+    }
+
+    .productos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+        gap: 1.5rem;
+        padding: 0 3rem;
+        margin-bottom: 2rem;
+
+        .card {
+            width: 100%;
+            background-color: var(--color--principal);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 4px var(--color--detalle);
+            padding: 1rem;
+
+            a {
+                text-decoration: none;
+
+                img {
+                    width: 100%;
+                    border-radius: 0.5rem;
+                }
+            }
+
+            button {
+                margin-top: 0.5rem;
+                padding: 0.5rem 1rem;
+                border: none;
+                border-radius: 0.5rem;
+                background-color: var(--color--secundario);
+                color: var(--color--fondo);
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: var(--color--fondo);
+                color: var(--color--secundario);
+            }
+
+            &:hover {
+                transform: scale(1.03);
+            }
+        }
+    }
+}
+
+.Infocard {
+    width: 100%;
+            background-color: var(--color--principal);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 4px var(--color--detalle);
+            padding: 1rem;
+
+            a {
+                text-decoration: none;
+
+                img {
+                    width: 100%;
+                    border-radius: 0.5rem;
+                }
+            }
+
+            button {
+                margin-top: 0.5rem;
+                padding: 0.5rem 1rem;
+                border: none;
+                border-radius: 0.5rem;
+                background-color: var(--color--secundario);
+                color: var(--color--fondo);
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: var(--color--fondo);
+                color: var(--color--secundario);
+            }
+
+            &:hover {
+                transform: scale(1.03);
+            }
+}
+
+#contacto {
+    margin: 2rem 0;
+
+    h3 {
+        margin: 1rem;
+        font-family: "Baloo Bhaijaan 2", sans-serif;
+        font-size: 30px;
+        font-weight: 700;
+        color: var(--color--detalle);
+    }
+
+    form {
+        display: inline-grid;
+        width: 30%;
+        text-align: left;
+        border: 1px solid;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        border-color: var(--color--secundario);
+        color: var(--color--secundario);
+
+        label{
+            padding: 0.5rem 0;
+        }
+
+        button {
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--color--detalle);
+            color: var(--color--fondo);
+        }
+    }
+}
+
+footer {
+    width: 100%;
+    padding: 1rem 0;
+    background-color: var(--color--detalle);
+    color: var(--color--fondo);
+}
