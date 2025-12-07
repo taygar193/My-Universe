@@ -1,23 +1,39 @@
-// Inicializamos carrito y total
-let storedCartRaw = localStorage.getItem('productos');
-let storedTotalRaw = localStorage.getItem('total');
+// Variables locales para este script
+let PDstoredCartRaw = localStorage.getItem('productos');
+let PDstoredTotalRaw = localStorage.getItem('total');
 
-let cart;
-let totalPrice;
+let PDcart;
+let PDtotalPrice;
 
+// Parse seguro del carrito
 try {
-    cart = storedCartRaw ? JSON.parse(storedCartRaw) : [];
+   PDcart = PDstoredCartRaw ? JSON.parse(PDstoredCartRaw) : [];
 } catch (e) {
-    cart = [];
+   PDcart = [];
 }
 
+// Parse seguro del total
 try {
-    totalPrice = storedTotalRaw ? JSON.parse(storedTotalRaw) : 0;
-    if (isNaN(totalPrice)) totalPrice = 0;
+   PDtotalPrice = PDstoredTotalRaw ? JSON.parse(PDstoredTotalRaw) : 0;
+   if (isNaN(PDtotalPrice)) PDtotalPrice = 0;
 } catch (e) {
-    totalPrice = 0;
+   PDtotalPrice = 0;
 }
 
+function actualizarContador() {
+    const contador = document.querySelector('.count');
+    if (!contador) return;
+
+    if (PDcart.length === 0) {
+        contador.style.display = "none"; // escondemos el círculo si está vacío
+    } else {
+        contador.style.display = "flex"; // lo mostramos
+        contador.textContent = PDcart.length;
+    }
+}
+
+
+// Obtener id del producto desde query string
 const params = new URLSearchParams(window.location.search);
 const id = Number(params.get("id"));
 
@@ -25,6 +41,7 @@ if (!id) {
    alert("No se recibió un producto válido");
 }
 
+// Función para cargar detalle del producto
 const detailProduct = async () => {
    try {
       const res = await fetch(`https://6934ed5dfa8e704dafbc8513.mockapi.io/myproductos/products/?id=${id}`);
@@ -33,9 +50,11 @@ const detailProduct = async () => {
 
       if (!product) {
          alert("Producto no encontrado");
+         return;
       }
 
       const container = document.getElementById('description');
+      if (!container) return;
 
       const card = document.createElement('div');
       card.classList.add('Infocard');
@@ -51,7 +70,7 @@ const detailProduct = async () => {
             data-nombre="${product.title}"
             data-precio="${product.price}"
          >Añadir</button>
-         <p><span>Más información:<span></p>
+         <p><span>Más información:</span></p>
          <p>Marca: ${product.brand}</p>
          <p>Categoría: ${product.category}</p>
          <p>Tags: ${product.tags.join(", ")}</p>
@@ -60,11 +79,11 @@ const detailProduct = async () => {
       container.appendChild(card);
 
    } catch (error) {
-      console.log(error);
+      console.error("Error al cargar detalle del producto:", error);
    }
 }
 
-// Agregar producto al carrito (con subtotal)
+// Función para agregar producto al carrito desde product-detalle
 function agregarBotonDinamico() {
    const cards = document.querySelectorAll('.Infocard');
 
@@ -77,13 +96,13 @@ function agregarBotonDinamico() {
 
       button.addEventListener('click', () => {
 
-         const existing = cart.find(p => p.title === title);
+         const existing = PDcart.find(p => p.title === title);
 
          if (existing) {
             existing.count++;
             existing.totalPrice = existing.count * existing.price;
          } else {
-            cart.push({
+            PDcart.push({
                title,
                price,
                count: 1,
@@ -92,18 +111,23 @@ function agregarBotonDinamico() {
          }
 
          // Recalculamos total general
-         totalPrice = cart.reduce((sum, p) => sum + p.totalPrice, 0);
+         PDtotalPrice = PDcart.reduce((sum, p) => sum + p.totalPrice, 0);
 
-         localStorage.setItem('productos', JSON.stringify(cart));
-         localStorage.setItem('total', JSON.stringify(totalPrice));
+         // Guardamos en localStorage
+         localStorage.setItem('productos', JSON.stringify(PDcart));
+         localStorage.setItem('total', JSON.stringify(PDtotalPrice));
 
-         const contador = document.querySelector('.count');
-         if (contador) contador.textContent = cart.length;
+         // Actualizamos contador visual si existe
+         actualizarContador();
       });
    });
 }
 
+// =========================
+// INICIALIZACIÓN
+// =========================
 document.addEventListener('DOMContentLoaded', async () => {
    await detailProduct();
    agregarBotonDinamico();
+   actualizarContador();
 });

@@ -68,6 +68,29 @@ nav {
         a:hover {
             color: var(--color--detalle);
         }
+
+        .botonCarrito {
+            position: relative;
+            display: inline-block;
+
+            .count {
+                position: absolute;
+                top: -8px;
+                /* ajustá según convenga */
+                right: -8px;
+                /* ajustá según convenga */
+                background: var(--color--principal);
+                color: white;
+                width: 18px;
+                height: 18px;
+                font-size: 12px;
+                font-weight: bold;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
     }
 }
 
@@ -214,20 +237,20 @@ nav {
         }
 
     }
-}
 
-@media (max-width: 768px) {
-    #description {
-        padding: 1rem;
-
-        .Infocard {
-            max-width: 100%;
+    @media (max-width: 768px) {
+        #description {
             padding: 1rem;
 
-            img {
+            .Infocard {
                 max-width: 100%;
-            }
+                padding: 1rem;
 
+                img {
+                    max-width: 100%;
+                }
+
+            }
         }
     }
 }
@@ -342,7 +365,7 @@ nav {
                 td {
                     padding: 0.5rem 0;
                     display: flex;
-                    justify-content: space-between;
+                    justify-content: start;
 
                     &:before {
                         content: attr(data-label);

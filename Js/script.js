@@ -9,23 +9,35 @@ let storedTotal;
 
 // Parse seguro del carrito
 try {
-    storedCart = storedCartRaw ? JSON.parse(storedCartRaw) : [];
+   storedCart = storedCartRaw ? JSON.parse(storedCartRaw) : [];
 } catch (e) {
-    console.warn("Carrito corrupto, reseteado.");
-    storedCart = [];
+   console.warn("Carrito corrupto, reseteado.");
+   storedCart = [];
 }
 
 // Parse seguro del total
 try {
-    storedTotal = storedTotalRaw ? JSON.parse(storedTotalRaw) : 0;
-    if (isNaN(storedTotal)) storedTotal = 0; // evita el NaN
+   storedTotal = storedTotalRaw ? JSON.parse(storedTotalRaw) : 0;
+   if (isNaN(storedTotal)) storedTotal = 0; // evita el NaN
 } catch (e) {
-    console.warn("Total corrupto, reseteado.");
-    storedTotal = 0;
+   console.warn("Total corrupto, reseteado.");
+   storedTotal = 0;
 }
 
 let cart = storedCart;
 let totalPrice = storedTotal;
+
+function actualizarContador() {
+    const contador = document.querySelector('.count');
+    if (!contador) return;
+
+    if (cart.length === 0) {
+        contador.style.display = "none"; // escondemos el círculo si está vacío
+    } else {
+        contador.style.display = "flex"; // lo mostramos
+        contador.textContent = cart.length;
+    }
+}
 
 
 // =========================
@@ -69,8 +81,8 @@ function agregarBotonDinamico() {
 
          localStorage.setItem('productos', JSON.stringify(cart));
 
-         const contador = document.querySelector('.count');
-         if (contador) contador.textContent = cart.length;
+         actualizarContador();
+         
       });
    });
 }
@@ -204,4 +216,5 @@ function printProducts(products) {
 document.addEventListener("DOMContentLoaded", () => {
    loadProduct();
    handleCart();
+   actualizarContador();
 });
