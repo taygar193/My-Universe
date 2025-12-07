@@ -1,9 +1,25 @@
 // =========================
 // VARIABLES GLOBALES
 // =========================
-let cart = JSON.parse(localStorage.getItem('productos')) || [];
-let totalPrice = JSON.parse(localStorage.getItem('total')) || 0;
+let storedCart = JSON.parse(localStorage.getItem('productos')) || [];
+let storedTotal = JSON.parse(localStorage.getItem('total')) || 0;
 
+let cart = [];
+let totalPrice = 0;
+
+try {
+   cart = storedCart ? JSON.parse(storedCart) : [];
+} catch (e) {
+   console.warn("Error parsing cart, se reinicia:", e);
+   cart = [];
+}
+
+try {
+   totalPrice = storedTotal ? JSON.parse(storedTotal) : 0;
+} catch (e) {
+   console.warn("Error parsing totalPrice, se reinicia:", e);
+   totalPrice = 0;
+}
 
 // =========================
 // AGREGAR PRODUCTO
@@ -24,22 +40,27 @@ function agregarBotonDinamico() {
          const existing = cart.find(p => p.title === title);
 
          if (existing) {
-            existing.count++;               
-            existing.totalPrice = existing.count * existing.price; 
+            existing.count++;
+            existing.totalPrice = existing.count * existing.price;
          } else {
             cart.push({
                title,
-               price,                        
+               price,
                count: 1,
-               totalPrice: price            
+               totalPrice: price
             });
          }
 
          //calculo total general
          totalPrice = cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
+         if (!isNaN(totalPrice)) {
+            localStorage.setItem('total', JSON.stringify(totalPrice));
+         } else {
+            localStorage.setItem('total', JSON.stringify(0));
+         }
+
          localStorage.setItem('productos', JSON.stringify(cart));
-         localStorage.setItem('total', totalPrice);
 
          const contador = document.querySelector('.count');
          if (contador) contador.textContent = cart.length;
