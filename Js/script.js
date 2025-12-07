@@ -1,25 +1,32 @@
 // =========================
 // VARIABLES GLOBALES
 // =========================
-let storedCart = JSON.parse(localStorage.getItem('productos')) || [];
-let storedTotal = JSON.parse(localStorage.getItem('total')) || 0;
+let storedCartRaw = localStorage.getItem('productos');
+let storedTotalRaw = localStorage.getItem('total');
 
-let cart = [];
-let totalPrice = 0;
+let storedCart;
+let storedTotal;
 
+// Parse seguro del carrito
 try {
-   cart = storedCart ? JSON.parse(storedCart) : [];
+    storedCart = storedCartRaw ? JSON.parse(storedCartRaw) : [];
 } catch (e) {
-   console.warn("Error parsing cart, se reinicia:", e);
-   cart = [];
+    console.warn("Carrito corrupto, reseteado.");
+    storedCart = [];
 }
 
+// Parse seguro del total
 try {
-   totalPrice = storedTotal ? JSON.parse(storedTotal) : 0;
+    storedTotal = storedTotalRaw ? JSON.parse(storedTotalRaw) : 0;
+    if (isNaN(storedTotal)) storedTotal = 0; // evita el NaN
 } catch (e) {
-   console.warn("Error parsing totalPrice, se reinicia:", e);
-   totalPrice = 0;
+    console.warn("Total corrupto, reseteado.");
+    storedTotal = 0;
 }
+
+let cart = storedCart;
+let totalPrice = storedTotal;
+
 
 // =========================
 // AGREGAR PRODUCTO

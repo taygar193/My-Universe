@@ -1,6 +1,22 @@
 // Inicializamos carrito y total
-let cart = JSON.parse(localStorage.getItem('productos')) || [];
-let totalPrice = JSON.parse(localStorage.getItem('total')) || 0;
+let storedCartRaw = localStorage.getItem('productos');
+let storedTotalRaw = localStorage.getItem('total');
+
+let cart;
+let totalPrice;
+
+try {
+    cart = storedCartRaw ? JSON.parse(storedCartRaw) : [];
+} catch (e) {
+    cart = [];
+}
+
+try {
+    totalPrice = storedTotalRaw ? JSON.parse(storedTotalRaw) : 0;
+    if (isNaN(totalPrice)) totalPrice = 0;
+} catch (e) {
+    totalPrice = 0;
+}
 
 const params = new URLSearchParams(window.location.search);
 const id = Number(params.get("id"));
@@ -79,7 +95,7 @@ function agregarBotonDinamico() {
          totalPrice = cart.reduce((sum, p) => sum + p.totalPrice, 0);
 
          localStorage.setItem('productos', JSON.stringify(cart));
-         localStorage.setItem('total', totalPrice);
+         localStorage.setItem('total', JSON.stringify(totalPrice));
 
          const contador = document.querySelector('.count');
          if (contador) contador.textContent = cart.length;
