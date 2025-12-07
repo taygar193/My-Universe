@@ -133,7 +133,7 @@ function printProducts(products) {
       card.classList.add('card');
 
       card.innerHTML = `
-         <a href="./Product-detalle.html?id="${product.id}>
+         <a href="./Product-detalle.html?id=${product.id}">
             <img src="${product.thumbnail}" alt="${product.title}">
             <h4>${product.title}</h4>
          </a>
