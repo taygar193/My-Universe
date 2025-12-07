@@ -22,6 +22,18 @@ html {
 
 body {
     background-color: var(--color--fondo);
+    min-height: 100vh;
+    /* ocupa toda la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    /* el contenido principal ocupa todo el espacio disponible */
+    width: 100%;
+    display: block;
+    /* importante para que grids no se rompan */
 }
 
 header {
@@ -59,26 +71,31 @@ nav {
     }
 }
 
-main {
+#cabecera {
+    display: flex;
+    /* activa flexbox */
+    justify-content: center;
+    /* centra horizontalmente */
+    align-items: center;
+    /* centra verticalmente */
+    min-height: 20rem;
     background-image: url("../Assets/Concierto.jpg");
-    height: 20rem;
     background-repeat: no-repeat;
     background-size: cover;
-    position: relative;
-    background-attachment: fixed;
     background-position: center;
 
     h2 {
-        position: relative;
-        top: 45%;
         color: white;
         font-size: 40px;
         text-shadow: 5px 5px 5px var(--color--detalle);
+        margin: 0;
+        /* elimina margenes por defecto */
     }
 }
 
 .tienda {
     margin: 1rem auto;
+    width: 100%;
 
     h3 {
         margin: 1rem;
@@ -94,113 +111,336 @@ main {
         gap: 1.5rem;
         padding: 0 3rem;
         margin-bottom: 2rem;
-
-        .card {
-            width: 100%;
-            background-color: var(--color--principal);
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 4px var(--color--detalle);
-            padding: 1rem;
-
-            a {
-                text-decoration: none;
-
-                img {
-                    width: 100%;
-                    border-radius: 0.5rem;
-                }
-            }
-
-            button {
-                margin-top: 0.5rem;
-                padding: 0.5rem 1rem;
-                border: none;
-                border-radius: 0.5rem;
-                background-color: var(--color--secundario);
-                color: var(--color--fondo);
-                cursor: pointer;
-            }
-
-            button:hover {
-                background-color: var(--color--fondo);
-                color: var(--color--secundario);
-            }
-
-            &:hover {
-                transform: scale(1.03);
-            }
-        }
-    }
-}
-
-.Infocard {
-    width: 100%;
-            background-color: var(--color--principal);
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 4px var(--color--detalle);
-            padding: 1rem;
-
-            a {
-                text-decoration: none;
-
-                img {
-                    width: 100%;
-                    border-radius: 0.5rem;
-                }
-            }
-
-            button {
-                margin-top: 0.5rem;
-                padding: 0.5rem 1rem;
-                border: none;
-                border-radius: 0.5rem;
-                background-color: var(--color--secundario);
-                color: var(--color--fondo);
-                cursor: pointer;
-            }
-
-            button:hover {
-                background-color: var(--color--fondo);
-                color: var(--color--secundario);
-            }
-
-            &:hover {
-                transform: scale(1.03);
-            }
-}
-
-#contacto {
-    margin: 2rem 0;
-
-    h3 {
-        margin: 1rem;
-        font-family: "Baloo Bhaijaan 2", sans-serif;
-        font-size: 30px;
-        font-weight: 700;
-        color: var(--color--detalle);
+        width: 98%;
+        max-width: 1800px;
+        /* límite de ancho para no romper layout */
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    form {
-        display: inline-grid;
-        width: 30%;
-        text-align: left;
-        border: 1px solid;
+    .card {
+        background-color: var(--color--principal);
         border-radius: 0.5rem;
+        box-shadow: 0 4px 4px var(--color--detalle);
         padding: 1rem;
-        border-color: var(--color--secundario);
-        color: var(--color--secundario);
+        width: 100%;
 
-        label{
-            padding: 0.5rem 0;
+        a {
+            text-decoration: none;
+
+            img {
+                width: 100%;
+                border-radius: 0.5rem;
+            }
         }
 
         button {
             margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: var(--color--secundario);
+            color: var(--color--fondo);
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: var(--color--fondo);
+            color: var(--color--secundario);
+        }
+
+        &:hover {
+            transform: scale(1.03);
+        }
+    }
+}
+
+#description {
+    display: flex;
+    justify-content: center;
+    margin: 2rem auto;
+    padding: 1rem;
+    max-width: 900px;
+
+    .Infocard {
+        width: 80%;
+        background-color: var(--color--principal);
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 4px var(--color--detalle);
+        padding: 1rem;
+
+        h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        a {
+            text-decoration: none;
+
+            img {
+                width: 100%;
+                max-width: 300px;
+                border-radius: 10px;
+                object-fit: cover;
+            }
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--color--detalle);
+            margin: 0.5rem 0;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--color--secundario);
+            color: var(--color--fondo);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
         }
 
         button:hover {
             background-color: var(--color--detalle);
             color: var(--color--fondo);
+        }
+
+    }
+}
+
+@media (max-width: 768px) {
+    #description {
+        padding: 1rem;
+
+        .Infocard {
+            max-width: 100%;
+            padding: 1rem;
+
+            img {
+                max-width: 100%;
+            }
+
+        }
+    }
+}
+
+.Carrito {
+
+    h3 {
+        margin-top: 1.5rem;
+    }
+
+    #itemProducts {
+        margin: 1rem auto;
+        padding: 1rem;
+        max-width: 800px;
+        font-family: "Baloo Bhaijaan 2", sans-serif;
+        color: var(--color--secundario);
+
+        p {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            text-align: left;
+
+            thead {
+                background-color: var(--color--secundario);
+                color: var(--color--fondo);
+
+                th {
+                    padding: 0.8rem;
+                    text-align: left;
+                    font-weight: 600;
+                }
+            }
+
+            tbody {
+                tr {
+                    border-bottom: 1px solid #ccc;
+
+                    td {
+                        padding: 0.8rem;
+                    }
+
+                    &:nth-child(even) {
+                        background-color: rgba(0, 0, 0, 0.05);
+                    }
+                }
+            }
+        }
+
+        div {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+
+            h4 {
+                font-size: 1.3rem;
+                font-weight: 700;
+            }
+
+            button {
+                padding: 0.7rem 1.2rem;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                color: var(--color--fondo);
+                background-color: var(--color--secundario);
+
+                a {
+                    color: var(--color--fondo);
+                    text-decoration: none;
+                }
+
+                &:hover {
+                    background-color: var(--color--detalle);
+                }
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tbody tr {
+                margin-bottom: 1rem;
+                border-bottom: 2px solid var(--color--secundario);
+                padding: 0.5rem 0;
+
+                td {
+                    padding: 0.5rem 0;
+                    display: flex;
+                    justify-content: space-between;
+
+                    &:before {
+                        content: attr(data-label);
+                        font-weight: 600;
+                        color: var(--color--secundario);
+                    }
+                }
+            }
+
+            div {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    }
+}
+
+#contacto {
+    margin: 2rem auto;
+    padding: 1rem;
+    width: 100%;
+    max-width: 1000px;
+    font-family: "Baloo Bhaijaan 2", sans-serif;
+
+    h3 {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--color--detalle);
+        margin-bottom: 1.5rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background-color: var(--color--fondo);
+        border: 2px solid var(--color--secundario);
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 550px;
+        margin: 0 auto;
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                margin-bottom: 0.5rem;
+                color: var(--color--secundario);
+                font-weight: 600;
+            }
+
+            input,
+            textarea {
+                padding: 0.7rem 1rem;
+                border: 1px solid var(--color--secundario);
+                border-radius: 8px;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+
+                &:focus {
+                    border-color: var(--color--detalle);
+                    outline: none;
+                    box-shadow: 0 0 5px var(--color--detalle);
+                }
+            }
+
+            textarea {
+                resize: vertical;
+            }
+        }
+
+        button {
+            padding: 0.8rem 1.2rem;
+            background-color: var(--color--secundario);
+            color: var(--color--fondo);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background-color: var(--color--detalle);
+                color: var(--color--fondo);
+            }
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        form {
+            width: 90%;
+            padding: 1rem;
         }
     }
 }

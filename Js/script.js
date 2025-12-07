@@ -24,16 +24,19 @@ function agregarBotonDinamico() {
          const existing = cart.find(p => p.title === title);
 
          if (existing) {
-            existing.count++;
+            existing.count++;               
+            existing.totalPrice = existing.count * existing.price; 
          } else {
             cart.push({
                title,
-               price,
-               count: 1
+               price,                        
+               count: 1,
+               totalPrice: price            
             });
          }
 
-         totalPrice += price;
+         //calculo total general
+         totalPrice = cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
          localStorage.setItem('productos', JSON.stringify(cart));
          localStorage.setItem('total', totalPrice);
@@ -43,6 +46,7 @@ function agregarBotonDinamico() {
       });
    });
 }
+
 
 
 // =========================
@@ -58,12 +62,14 @@ function handleCart() {
    }
 
    const tabla = document.createElement("table");
+
    tabla.innerHTML = `
       <thead>
          <tr>
             <th>Producto</th>
-            <th>Precio</th>
+            <th>Precio Unitario</th>
             <th>Cantidad</th>
+            <th>Subtotal</th>
          </tr>
       </thead>
       <tbody>
@@ -71,17 +77,27 @@ function handleCart() {
             cart.map(p => `
                <tr>
                   <td>${p.title}</td>
-                  <td>$${p.price}</td>
+                  <td>$${p.price.toFixed(2)}</td>
                   <td>${p.count}</td>
+                  <td>$${p.totalPrice.toFixed(2)}</td>
                </tr>
             `).join("")
          }
       </tbody>
-      <button onclick="limpiarCarrito()">Limpiar Carrito</button>
    `;
 
    carritoProduct.appendChild(tabla);
+
+   // Total general debajo de la tabla
+   const totalDiv = document.createElement("div");
+   totalDiv.innerHTML = `
+      <h4>Precio total: $${totalPrice.toFixed(2)}</h4>
+      <button onclick="limpiarCarrito()">Limpiar Carrito</button>
+      <button><a href="../Pages/proximamente.html">Finalizar compra</a></button>
+   `;
+   carritoProduct.appendChild(totalDiv);
 }
+
 
 
 // =========================

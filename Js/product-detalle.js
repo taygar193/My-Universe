@@ -1,12 +1,23 @@
+// Inicializamos carrito y total
+let cart = JSON.parse(localStorage.getItem('productos')) || [];
+let totalPrice = JSON.parse(localStorage.getItem('total')) || 0;
+
 const params = new URLSearchParams(window.location.search);
 const id = Number(params.get("id"));
 
-//async function detailProduct ()
+if (!id) {
+   alert("No se recibió un producto válido");
+}
+
 const detailProduct = async () => {
    try {
       const res = await fetch(`https://6934ed5dfa8e704dafbc8513.mockapi.io/myproductos/products/?id=${id}`);
       const data = await res.json();
-      const product = data[0];  
+      const product = data[0];
+
+      if (!product) {
+         alert("Producto no encontrado");
+      }
 
       const container = document.getElementById('description');
 
@@ -36,7 +47,8 @@ const detailProduct = async () => {
       console.log(error);
    }
 }
-//Agregar al carrito
+
+// Agregar producto al carrito (con subtotal)
 function agregarBotonDinamico() {
    const cards = document.querySelectorAll('.Infocard');
 
@@ -49,20 +61,22 @@ function agregarBotonDinamico() {
 
       button.addEventListener('click', () => {
 
-         // Buscar si existe
          const existing = cart.find(p => p.title === title);
 
          if (existing) {
             existing.count++;
+            existing.totalPrice = existing.count * existing.price;
          } else {
             cart.push({
                title,
                price,
-               count: 1
+               count: 1,
+               totalPrice: price
             });
          }
 
-         totalPrice += price;
+         // Recalculamos total general
+         totalPrice = cart.reduce((sum, p) => sum + p.totalPrice, 0);
 
          localStorage.setItem('productos', JSON.stringify(cart));
          localStorage.setItem('total', totalPrice);
@@ -72,6 +86,7 @@ function agregarBotonDinamico() {
       });
    });
 }
+
 document.addEventListener('DOMContentLoaded', async () => {
    await detailProduct();
    agregarBotonDinamico();
